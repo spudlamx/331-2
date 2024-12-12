@@ -53,11 +53,6 @@ protected:
       return (pt.getX() < -radius || pt.getX() >= dimensions.getX() + radius ||
          pt.getY() < -radius || pt.getY() >= dimensions.getY() + radius);
    }
-   void drawLine(const Position& begin, const Position& end,
-                 double red = 1.0, double green = 1.0, double blue = 1.0) const;
-
-   void drawDot(const Position& point, double radius = 2.0,
-                double red = 1.0, double green = 1.0, double blue = 1.0) const;
    int    random(int    min, int    max);
    double random(double min, double max);
 };

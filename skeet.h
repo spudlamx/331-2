@@ -44,11 +44,7 @@ public:
     bool isPlaying() const { return time.isPlaying();  }
 private:
     // generate new birds
-    void spawn();                  
-    void drawBackground(double redBack, double greenBack, double blueBack) const;
-    void drawTimer(double percent,
-                   double redFore, double greenFore, double blueFore,
-                   double redBack, double greenBack, double blueBack) const;
+    void spawn();
     void drawBullseye(double angle) const;
 
     Gun gun;                       // the gun
