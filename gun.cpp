@@ -98,7 +98,7 @@ void drawRectangle(const Position& pt,
   * GUN : DISPLAY
   * Display the gun on the screen
   *********************************************/
-void RealGun::display() const
+void Gun::display() const
 {
    drawRectangle(pt, M_PI_2 - angle, 10.0, 100.0, 1.0, 1.0, 1.0);
 }
@@ -107,7 +107,7 @@ void RealGun::display() const
  * RealGun : INTERACT
  * Move the RealGun
  *********************************************/
-void RealGun::interact(int clockwise, int counterclockwise)
+void Gun::interact(int clockwise, int counterclockwise)
 {
    // move it
    if (clockwise > 0)
