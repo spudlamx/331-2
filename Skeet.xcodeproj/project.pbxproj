@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9DC3277B2D0A66AD00EEF467 /* facade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3277A2D0A66AD00EEF467 /* facade.cpp */; };
 		C10803212AAF7E11005CEA4E /* points.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C10803202AAF7E11005CEA4E /* points.cpp */; };
 		C15451E627403ED30095997B /* effect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C15451E527403ED30095997B /* effect.cpp */; };
 		C16B8F522744ABDE009CC1DC /* score.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C16B8F502744ABDE009CC1DC /* score.cpp */; };
@@ -35,6 +36,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9DC327792D0A66AD00EEF467 /* facade.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = facade.hpp; sourceTree = "<group>"; };
+		9DC3277A2D0A66AD00EEF467 /* facade.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = facade.cpp; sourceTree = "<group>"; };
 		C108031F2AAF7E11005CEA4E /* points.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = points.h; sourceTree = "<group>"; };
 		C10803202AAF7E11005CEA4E /* points.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = points.cpp; sourceTree = "<group>"; };
 		C15451E427403CD70095997B /* effect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = effect.h; sourceTree = "<group>"; };
@@ -92,6 +95,8 @@
 				C159391D271E278800A7F857 /* bullet.h */,
 				C16F25482716733A000FA407 /* time.cpp */,
 				C179F5FE2712254900BD3050 /* time.h */,
+				9DC327792D0A66AD00EEF467 /* facade.hpp */,
+				9DC3277A2D0A66AD00EEF467 /* facade.cpp */,
 				C179F5FD2710DE0E00BD3050 /* gun.h */,
 				C1D4EAE22577F575002B56E3 /* skeet.cpp */,
 				C1D4EAE12577F574002B56E3 /* position.cpp */,
@@ -179,6 +184,7 @@
 				C16B8F522744ABDE009CC1DC /* score.cpp in Sources */,
 				C1D4EAED2577F57B002B56E3 /* uiInteract.cpp in Sources */,
 				C10803212AAF7E11005CEA4E /* points.cpp in Sources */,
+				9DC3277B2D0A66AD00EEF467 /* facade.cpp in Sources */,
 				C184132A273E9C4900143AB2 /* bullet.cpp in Sources */,
 				C15451E627403ED30095997B /* effect.cpp in Sources */,
 				C184132C273E9C4900143AB2 /* bird.cpp in Sources */,

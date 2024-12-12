@@ -28,7 +28,7 @@
 class Skeet
 {
 public:
-    Skeet(Position & dimensions) : dimensions(dimensions), time(), score(), hitRatio(), bullseye(false), gun(ProxyGun(Position(800.0, 0.0), &bullets)){}
+    Skeet(Position & dimensions) : dimensions(dimensions), time(), score(), hitRatio(), bullseye(false), gun(Position(800.0, 0.0)){}
 
     // handle all user input
     void interact(const UserInput& ui);
@@ -51,7 +51,7 @@ private:
                    double redBack, double greenBack, double blueBack) const;
     void drawBullseye(double angle) const;
 
-    ProxyGun gun;                       // the gun
+    Gun gun;                       // the gun
     std::list<Bird*> birds;        // all the shootable birds
     std::list<Bullet*> bullets;    // the bullets
     std::list<Effect*> effects;    // the fragments of a dead bird.
