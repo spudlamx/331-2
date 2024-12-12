@@ -355,11 +355,40 @@ void Skeet::drawStatus() const
  * SKEET INTERACT
  * handle all user input
  ************************/
+
+// THIS IS FOR THE PROXY GUN INTERFACE METHOD
+//void Skeet::interact(const UserInput & ui)
+//{
+//   // reset the game
+//   if (time.isGameOver() && ui.isSpace())
+//   { 
+//      time.reset();
+//      score.reset();
+//      hitRatio.reset();
+//      return;
+//   }
+//
+//   // gather input from the interface
+//   gun.setGun((time.isPlaying()? time.level():0));
+//   gun.interact(ui.isUp() + ui.isRight(), ui.isDown() + ui.isLeft());
+//   gun.shoot(ui);
+//   
+//   bullseye = ui.isShift();
+//
+//   // send movement information to all the bullets. Only the missile cares.
+//   for (auto bullet : bullets)
+//      bullet->input(ui.isUp() + ui.isRight(), ui.isDown() + ui.isLeft(), ui.isB()); 
+//}
+
+/************************
+ * SKEET INTERACT
+ * handle all user input
+ ************************/
 void Skeet::interact(const UserInput & ui)
 {
    // reset the game
    if (time.isGameOver() && ui.isSpace())
-   { 
+   {
       time.reset();
       score.reset();
       hitRatio.reset();
@@ -367,15 +396,28 @@ void Skeet::interact(const UserInput & ui)
    }
 
    // gather input from the interface
-   gun.setGun((time.isPlaying()? time.level():0));
    gun.interact(ui.isUp() + ui.isRight(), ui.isDown() + ui.isLeft());
-   gun.shoot(ui);
+   Bullet *p = nullptr;
+
+   // a pellet can be shot at any time
+   if (ui.isSpace())
+      p = new Pellet(gun.getAngle());
+   // missiles can be shot at level 2 and higher
+   else if (ui.isM() && time.level() > 1)
+      p = new Missile(gun.getAngle());
+   // bombs can be shot at level 3 and higher
+   else if (ui.isB() && time.level() > 2)
+      p = new Bomb(gun.getAngle());
    
    bullseye = ui.isShift();
 
+   // add something if something has been added
+   if (nullptr != p)
+      bullets.push_back(p);
+   
    // send movement information to all the bullets. Only the missile cares.
    for (auto bullet : bullets)
-      bullet->input(ui.isUp() + ui.isRight(), ui.isDown() + ui.isLeft(), ui.isB()); 
+      bullet->input(ui.isUp() + ui.isRight(), ui.isDown() + ui.isLeft(), ui.isB());
 }
 
 /******************************************************************
