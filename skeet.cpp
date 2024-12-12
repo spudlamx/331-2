@@ -161,14 +161,14 @@ void Skeet::drawBullseye(double angle) const
 void Skeet::drawLevel() const
 {
    // output the background
-   ogstream().drawBackground(time.level() * .1, 0.0, 0.0);
+   gout->drawBackground(time.level() * .1, 0.0, 0.0);
    
    // draw the bullseye
    if (bullseye)
       drawBullseye(gun.getAngle());
 
    // output the gun
-   gun.display();
+   gun.display(gout);
          
    // output the birds, bullets, and fragments
    for (auto& pts : points)
@@ -176,14 +176,14 @@ void Skeet::drawLevel() const
    for (auto effect : effects)
       effect->render();
    for (auto bullet : bullets)
-      bullet->output();
+      bullet->output(gout);
    for (auto element : birds)
-      element->draw();
+      element->draw(gout);
    
    // status
-   ogstream().drawText(Position(10,                         dimensions.getY() - 30), score.getText()  );
-   ogstream().drawText(Position(dimensions.getX() / 2 - 30, dimensions.getY() - 30), time.getText()   );
-   ogstream().drawText(Position(dimensions.getX() - 110,    dimensions.getY() - 30), hitRatio.getText());
+   gout->drawTextStr(Position(10,                         dimensions.getY() - 30), score.getText()  );
+   gout->drawTextStr(Position(dimensions.getX() / 2 - 30, dimensions.getY() - 30), time.getText()   );
+   gout->drawTextStr(Position(dimensions.getX() - 110,    dimensions.getY() - 30), hitRatio.getText());
 }
 
 /************************
@@ -197,24 +197,24 @@ void Skeet::drawStatus() const
    if (time.isGameOver())
    {
       // draw the end of game message
-      ogstream().drawText(Position(dimensions.getX() / 2 - 30, dimensions.getY() / 2 + 10),
+      gout->drawText(Position(dimensions.getX() / 2 - 30, dimensions.getY() / 2 + 10),
                "Game Over");
 
       // draw end of game status
-      ogstream().drawText(Position(dimensions.getX() / 2 - 30, dimensions.getY() / 2 - 10),
+      gout->drawTextStr(Position(dimensions.getX() / 2 - 30, dimensions.getY() / 2 - 10),
                score.getText());
    }
    else
    {
       // output the status timer
-      ogstream().drawTimer(1.0 - time.percentLeft(),
+      gout->drawTimer(1.0 - time.percentLeft(),
                      (time.level() - 0.0) * .1, 0.0, 0.0,
                      (time.level() - 1.0) * .1, 0.0, 0.0);
 
       // draw the message giving a countdown
       sout << "Level " << time.level()
            << " begins in " << time.secondsLeft() << " seconds";
-      ogstream().drawText(Position(dimensions.getX() / 2 - 110, dimensions.getY() / 2 - 10),
+      gout->drawTextStr(Position(dimensions.getX() / 2 - 110, dimensions.getY() / 2 - 10),
          sout.str());
    }
 }

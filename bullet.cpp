@@ -10,28 +10,6 @@
 #include "bullet.h"
 #include "facade.hpp"
 
-#ifdef __APPLE__
-#define GL_SILENCE_DEPRECATION
-#include <openGL/gl.h>    // Main OpenGL library
-#include <GLUT/glut.h>    // Second OpenGL library
-#define GLUT_TEXT GLUT_BITMAP_HELVETICA_18
-#endif // __APPLE__
-
-#ifdef __linux__
-#include <GL/gl.h>        // Main OpenGL library
-#include <GL/glut.h>      // Second OpenGL library
-#define GLUT_TEXT GLUT_BITMAP_HELVETICA_12
-#endif // __linux__
-
-#ifdef _WIN32
-#include <stdio.h>
-#include <stdlib.h>
-#include <GL/glut.h>         // OpenGL library we copied 
-#define _USE_MATH_DEFINES
-#include <math.h>
-#define GLUT_TEXT GLUT_BITMAP_HELVETICA_12
-#endif // _WIN32
-
 /*********************************************
  * BULLET constructor
  *********************************************/
@@ -137,25 +115,25 @@ void Shrapnel::move(std::list<Effect*> & effects)
  * PELLET OUTPUT
  * Draw a pellet - just a 3-pixel dot
  *********************************************/
-void Pellet::output()
+void Pellet::output(ogstream* gout)
 {
    if (!isDead())
-      ogstream().drawDot(pt, 3.0, 1.0, 1.0, 0.0);
+      gout->drawDot(pt, 3.0, 1.0, 1.0, 0.0);
 }
 
 /*********************************************
  * BOMB OUTPUT
  * Draw a bomb - many dots to make it have a soft edge
  *********************************************/
-void Bomb::output()
+void Bomb::output(ogstream* gout)
 {
    if (!isDead())
    {
        // Bomb actually has a gradient to cut out the harsh edges
-      ogstream().drawDot(pt, radius + 2.0, 0.50, 0.50, 0.00);
-      ogstream().drawDot(pt, radius + 1.0, 0.75, 0.75, 0.00);
-      ogstream().drawDot(pt, radius + 0.0, 0.87, 0.87, 0.00);
-      ogstream().drawDot(pt, radius - 1.0, 1.00, 1.00, 0.00);
+      gout->drawDot(pt, radius + 2.0, 0.50, 0.50, 0.00);
+      gout->drawDot(pt, radius + 1.0, 0.75, 0.75, 0.00);
+      gout->drawDot(pt, radius + 0.0, 0.87, 0.87, 0.00);
+      gout->drawDot(pt, radius - 1.0, 1.00, 1.00, 0.00);
    }
 }
 
@@ -163,25 +141,25 @@ void Bomb::output()
  * SHRAPNEL OUTPUT
  * Draw a fragment - a bright yellow dot
  *********************************************/
-void Shrapnel::output()
+void Shrapnel::output(ogstream* gout)
 {
     if (!isDead())
-       ogstream().drawDot(pt, radius, 1.0, 1.0, 0.0);
+       gout->drawDot(pt, radius, 1.0, 1.0, 0.0);
 }
 
 /*********************************************
  * MISSILE OUTPUT
  * Draw a missile - a line and a dot for the fins
  *********************************************/
-void Missile::output()
+void Missile::output(ogstream* gout)
 {
     if (!isDead())
     {
         // missile is a line with a dot at the end so it looks like fins.
         Position ptNext(pt);
         ptNext.add(v);
-        ogstream().drawLine(pt, ptNext, 1.0, 1.0, 0.0);
-       ogstream().drawDot(pt, 3.0, 1.0, 1.0, 1.0);
+        gout->drawLine(pt, ptNext, 1.0, 1.0, 0.0);
+        gout->drawDot(pt, 3.0, 1.0, 1.0, 1.0);
     }
 }
 

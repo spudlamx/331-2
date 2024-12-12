@@ -11,28 +11,6 @@
 #include "bird.h"
 #include "facade.hpp"
 
-#ifdef __APPLE__
-#define GL_SILENCE_DEPRECATION
-#include <openGL/gl.h>    // Main OpenGL library
-#include <GLUT/glut.h>    // Second OpenGL library
-#define GLUT_TEXT GLUT_BITMAP_HELVETICA_18
-#endif // __APPLE__
-
-#ifdef __linux__
-#include <GL/gl.h>        // Main OpenGL library
-#include <GL/glut.h>      // Second OpenGL library
-#define GLUT_TEXT GLUT_BITMAP_HELVETICA_12
-#endif // __linux__
-
-#ifdef _WIN32
-#include <stdio.h>
-#include <stdlib.h>
-#include <GL/glut.h>         // OpenGL library we copied 
-#define _USE_MATH_DEFINES
-#include <math.h>
-#define GLUT_TEXT GLUT_BITMAP_HELVETICA_12
-#endif // _WIN32
-
 
 /******************************************************************
  * RANDOM
@@ -243,12 +221,12 @@ void Sinker::advance()
  * STANDARD DRAW
  * Draw a standard bird: blue center and white outline
  *********************************************/
-void Standard::draw()
+void Standard::draw(ogstream* gout)
 {
    if (!isDead())
    {
-      ogstream().drawDisk(pt, radius - 0.0, 1.0, 1.0, 1.0); // white outline
-      ogstream().drawDisk(pt, radius - 3.0, 0.0, 0.0, 1.0); // blue center
+      gout->drawDisk(pt, radius - 0.0, 1.0, 1.0, 1.0); // white outline
+      gout->drawDisk(pt, radius - 3.0, 0.0, 0.0, 1.0); // blue center
    }
 }
 
@@ -256,12 +234,12 @@ void Standard::draw()
  * FLOATER DRAW
  * Draw a floating bird: white center and blue outline
  *********************************************/
-void Floater::draw()
+void Floater::draw(ogstream* gout)
 {
    if (!isDead())
    {
-      ogstream().drawDisk(pt, radius - 0.0, 0.0, 0.0, 1.0); // blue outline
-      ogstream().drawDisk(pt, radius - 4.0, 1.0, 1.0, 1.0); // white center
+      gout->drawDisk(pt, radius - 0.0, 0.0, 0.0, 1.0); // blue outline
+      gout->drawDisk(pt, radius - 4.0, 1.0, 1.0, 1.0); // white center
    }
 }
 
@@ -269,15 +247,15 @@ void Floater::draw()
  * CRAZY DRAW
  * Draw a crazy bird: concentric circles in a course gradient
  *********************************************/
-void Crazy::draw()
+void Crazy::draw(ogstream* gout)
 {
    if (!isDead())
    {
-      ogstream().drawDisk(pt, radius * 1.0, 0.0, 0.0, 1.0); // bright blue outside
-      ogstream().drawDisk(pt, radius * 0.8, 0.2, 0.2, 1.0);
-      ogstream().drawDisk(pt, radius * 0.6, 0.4, 0.4, 1.0);
-      ogstream().drawDisk(pt, radius * 0.4, 0.6, 0.6, 1.0);
-      ogstream().drawDisk(pt, radius * 0.2, 0.8, 0.8, 1.0); // almost white inside
+      gout->drawDisk(pt, radius * 1.0, 0.0, 0.0, 1.0); // bright blue outside
+      gout->drawDisk(pt, radius * 0.8, 0.2, 0.2, 1.0);
+      gout->drawDisk(pt, radius * 0.6, 0.4, 0.4, 1.0);
+      gout->drawDisk(pt, radius * 0.4, 0.6, 0.6, 1.0);
+      gout->drawDisk(pt, radius * 0.2, 0.8, 0.8, 1.0); // almost white inside
    }
 }
 
@@ -285,11 +263,11 @@ void Crazy::draw()
  * SINKER DRAW
  * Draw a sinker bird: black center and dark blue outline
  *********************************************/
-void Sinker::draw()
+void Sinker::draw(ogstream* gout)
 {
    if (!isDead())
    {
-      ogstream().drawDisk(pt, radius - 0.0, 0.0, 0.0, 0.8);
-      ogstream().drawDisk(pt, radius - 4.0, 0.0, 0.0, 0.0);
+      gout->drawDisk(pt, radius - 0.0, 0.0, 0.0, 0.8);
+      gout->drawDisk(pt, radius - 4.0, 0.0, 0.0, 0.0);
    }
 }

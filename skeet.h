@@ -18,8 +18,9 @@
 #include "time.h"
 #include "score.h"
 #include "points.h"
-
+#include "facade.hpp"
 #include <list>
+
 
 /*************************************************************************
  * Skeet
@@ -28,7 +29,10 @@
 class Skeet
 {
 public:
-    Skeet(Position & dimensions) : dimensions(dimensions), time(), score(), hitRatio(), bullseye(false), gun(Position(800.0, 0.0)){}
+   Skeet(Position & dimensions) : dimensions(dimensions), time(), score(), hitRatio(), bullseye(false), gun(Position(800.0, 0.0))
+   {
+      gout = new ogstream;
+   }
 
     // handle all user input
     void interact(const UserInput& ui);
@@ -56,5 +60,6 @@ private:
     Score score;                   // the player's score
     HitRatio hitRatio;             // the hit ratio for the birds
     Position dimensions;           // size of the screen
+    ogstream * gout;
     bool bullseye;
 };

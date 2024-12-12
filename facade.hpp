@@ -19,11 +19,12 @@ using namespace std;
 class ogstream : public std::ostringstream
 {
 public:
-   ogstream(): pt() {}
+   // constructors
+   ogstream(): pt(0, 0) {}
    ogstream(const Position& pt) : pt(pt) {}
    ~ogstream() { flush(); }
    
-   // Methods specific to drawing text on the screen
+   // Methods
    void flush();
    void setPosition(const Position& pt) { flush(); this->pt = pt; }
    ogstream& operator = (const Position& pt)
@@ -44,12 +45,17 @@ public:
                  double red, double green, double blue) const;
    void drawBackground(double redBack, double greenBack, double blueBack) const;
    void drawText(const Position & topLeft, const char * text) const;
+   void drawTextStr(const Position & topLeft, const string & text)
+   {
+      drawText(topLeft, text.c_str());
+   }
    void drawTimer(double percent, double redFore, double greenFore, double blueFore,
                   double redBack, double greenBack, double blueBack) const;
-   Position rotate(const Position& origin, double x, double y, double rotation);
+   
    
 private:
    Position pt;
+   Position rotate(const Position& origin, double x, double y, double rotation);
    
 };
 #endif /* facade_hpp */
