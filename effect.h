@@ -10,6 +10,7 @@
 #pragma once
 #include "position.h"
 
+
 /**********************
  * Effect: stuff that is not interactive
  **********************/
