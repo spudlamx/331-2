@@ -147,15 +147,15 @@ Crazy::Crazy(double radius, double speed, int points) : Bird()
 
  /***************************************************************/
  /***************************************************************/
- /*                            ADVANCE                          */
+ /*                            move                          */
  /***************************************************************/
  /***************************************************************/
 
 /*********************************************
- * STANDARD ADVANCE
+ * STANDARD move
  * How the standard bird moves - inertia and drag
  *********************************************/
-void Standard::advance()
+void Standard::move()
 {
    // small amount of drag
    v *= 0.995;
@@ -172,10 +172,10 @@ void Standard::advance()
 }
 
 /*********************************************
- * FLOATER ADVANCE
+ * FLOATER move
  * How the floating bird moves: strong drag and anti-gravity
  *********************************************/
-void Floater::advance()
+void Floater::move()
 {
    // large amount of drag
    v *= 0.990;
@@ -195,10 +195,10 @@ void Floater::advance()
 }
 
 /*********************************************
- * CRAZY ADVANCE
+ * CRAZY move
  * How the crazy bird moves, every half a second it changes direciton
  *********************************************/
-void Crazy::advance()
+void Crazy::move()
 {
    // erratic turns eery half a second or so
    if (randomInt(0, 15) == 0)
@@ -219,10 +219,10 @@ void Crazy::advance()
 }
 
 /*********************************************
- * SINKER ADVANCE
+ * SINKER move
  * How the sinker bird moves, no drag but gravity
  *********************************************/
-void Sinker::advance()
+void Sinker::move()
 {
    // gravity
    v.addDy(-0.07);

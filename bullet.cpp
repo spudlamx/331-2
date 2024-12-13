@@ -34,8 +34,7 @@
 /*********************************************
  * BULLET constructor
  *********************************************/
-Bullet::Bullet(double angle, double speed, double radius, int value) :
-   dead(false), radius(radius), value(value)
+Bullet::Bullet(double angle, double speed, double radius, int value) : Flyer(radius), value(value)
 {
    // set the initial position
    pt.setX(dimensions.getX() - 1.0);
@@ -53,10 +52,10 @@ Bullet::Bullet(double angle, double speed, double radius, int value) :
  * BOMB DEATH
  * Bombs have a tendency to explode!
  *********************************************/
-void Bomb::death(std::list<Bullet*>& bullets)
+void Bomb::death(std::list<Bullet*>& bullets, std::list<Effect*> * effects)
 {
    for (int i = 0; i < 20; i++)
-      bullets.push_back(new Shrapnel(*this));
+      bullets.push_back(new Shrapnel(*this, effects));
 }
 
  /***************************************************************/
@@ -69,7 +68,7 @@ void Bomb::death(std::list<Bullet*>& bullets)
  * BULLET MOVE
  * Move the bullet along by one time period
  *********************************************/
-void Bullet::move(std::list<Effect*> & effects)
+void Bullet::move()
 {
    // inertia
    pt.add(v);
@@ -83,7 +82,7 @@ void Bullet::move(std::list<Effect*> & effects)
  * BOMB MOVE
  * Move the bomb along by one time period
  *********************************************/
-void Bomb::move(std::list<Effect*> & effects)
+void Bomb::move()
 {
     // kill if it has been around too long
     timeToDie--;
@@ -91,27 +90,27 @@ void Bomb::move(std::list<Effect*> & effects)
         kill();
 
     // do the inertia thing
-    Bullet::move(effects);
+    Bullet::move();
 }
 
 /*********************************************
  * MISSILE MOVE
  * Move the missile along by one time period
  *********************************************/
-void Missile::move(std::list<Effect*> & effects)
+void Missile::move()
 {
     // kill if it has been around too long
-   effects.push_back(new Exhaust(pt, v));
+   effects->push_back(new Exhaust(pt, v));
 
     // do the inertia thing
-    Bullet::move(effects);
+    Bullet::move();
 }
 
 /*********************************************
  * SHRAPNEL MOVE
  * Move the shrapnel along by one time period
  *********************************************/
-void Shrapnel::move(std::list<Effect*> & effects)
+void Shrapnel::move()
 {
     // kill if it has been around too long
     timeToDie--;
@@ -119,15 +118,15 @@ void Shrapnel::move(std::list<Effect*> & effects)
         kill();
 
     // add a streek
-    effects.push_back(new Streek(pt, v));
+   effects->push_back(new Streek(pt, v));
     
     // do the usual bullet stuff (like inertia)
-    Bullet::move(effects);
+    Bullet::move();
 }
 
 /***************************************************************/
 /***************************************************************/
-/*                            OUTPUT                           */
+/*                            draw                           */
 /***************************************************************/
 /***************************************************************/
 
@@ -184,20 +183,20 @@ void Bullet::drawDot(const Position& point, double radius,
 }
 
 /*********************************************
- * PELLET OUTPUT
+ * PELLET draw
  * Draw a pellet - just a 3-pixel dot
  *********************************************/
-void Pellet::output()
+void Pellet::draw()
 {
    if (!isDead())
       drawDot(pt, 3.0, 1.0, 1.0, 0.0);
 }
 
 /*********************************************
- * BOMB OUTPUT
+ * BOMB draw
  * Draw a bomb - many dots to make it have a soft edge
  *********************************************/
-void Bomb::output()
+void Bomb::draw()
 {
    if (!isDead())
    {
@@ -210,20 +209,20 @@ void Bomb::output()
 }
 
 /*********************************************
- * SHRAPNEL OUTPUT
+ * SHRAPNEL draw
  * Draw a fragment - a bright yellow dot
  *********************************************/
-void Shrapnel::output()
+void Shrapnel::draw()
 {
     if (!isDead())
        drawDot(pt, radius, 1.0, 1.0, 0.0);
 }
 
 /*********************************************
- * MISSILE OUTPUT
+ * MISSILE draw
  * Draw a missile - a line and a dot for the fins
  *********************************************/
-void Missile::output()
+void Missile::draw()
 {
     if (!isDead())
     {

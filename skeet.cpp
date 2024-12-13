@@ -56,13 +56,13 @@ void Skeet::animate()
    // move the birds and the bullets
    for (auto element : birds)
    {
-      element->advance();
+      element->move();
       hitRatio.adjust(element->isDead() ? -1 : 0);
    }
    for (auto bullet : bullets)
-      bullet->move(effects);
+      bullet->move();
    for (auto effect : effects)
-      effect->fly();
+      effect->move();
    for (auto & pts : points)
       pts.update();
       
@@ -99,7 +99,7 @@ void Skeet::animate()
    for (auto it = bullets.begin(); it != bullets.end(); )
       if ((*it)->isDead())
       {
-         (*it)->death(bullets);
+         (*it)->death(bullets, &effects);
          int value = -(*it)->getValue();
          points.push_back(Points((*it)->getPosition(), value));
          score.adjust(value);
@@ -306,9 +306,9 @@ void Skeet::drawLevel() const
    for (auto& pts : points)
       pts.show();
    for (auto effect : effects)
-      effect->render();
+      effect->draw();
    for (auto bullet : bullets)
-      bullet->output();
+      bullet->draw();
    for (auto element : birds)
       element->draw();
    
@@ -404,9 +404,9 @@ void Skeet::interact(const UserInput & ui)
       p = new Pellet(gun.getAngle());
    // missiles can be shot at level 2 and higher
    else if (ui.isM() && time.level() > 1)
-      p = new Missile(gun.getAngle());
+      p = new Missile(gun.getAngle(), &effects);
    // bombs can be shot at level 3 and higher
-   else if (ui.isB() && time.level() > 2)
+   else if (ui.isB() )
       p = new Bomb(gun.getAngle());
    
    bullseye = ui.isShift();
